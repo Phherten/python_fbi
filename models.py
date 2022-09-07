@@ -1,37 +1,3 @@
-class Mafia:
-    def __init__(self, members=[]):
-        self.members = members
-
-    def get_equal_member(self, member):
-        # Cambiar nombre de variable element
-        for element in self.members:
-            if element.seniority == member.seniority:
-                return element
-        return None
-
-    # Cambiar nombre de metodo
-    def get_next_boss(self, member):
-        # 1. Buscar los datos del subordinado
-        # 2. Comparar los subordinados
-        subordinates = []
-        for element in self.members:
-            for sub in member.subordinates:
-                if sub == element.name:
-                    subordinates.append(element)
-
-        subordinates.sort(key=lambda x: x.seniority, reverse=True)
-        return subordinates[0]
-
-    def add_new_boss(self, member):
-        boss = self.get_equal_member(member)
-        if boss:
-            boss = self.get_next_boos(member)
-
-        for element in self.members:
-            if element.name in member.subordinates:
-                element.boss = boss.name
-
-
 class MafiaMember:
     def __init__(self, name, seniority=0, subordinates=[], boss=""):
         self.name = name
@@ -51,8 +17,36 @@ class MafiaMember:
         self.boss = name
         return self.boss
 
+    def add_subordinates(self, name):
+        self.subordinates.append(name)
+
     def get_subordinates(self):
         return self.subordinates
+
+    def get_equal_member(self, member):
+        # Cambiar nombre de variable element
+        if self.seniority == member.seniority:
+            return self
+        return None
+
+    # Cambiar nombre de metodo
+    def get_next_boss(self, member):
+        # 1. Buscar los datos del subordinado
+        # 2. Comparar los subordinados
+        if self.boss == member.name:
+            return self
+
+        # subordinates.sort(key=lambda x: x.seniority, reverse=True)
+        # return subordinates[0]
+
+    def add_new_boss(self, member):
+        boss = self.get_equal_member(member)
+        if boss:
+            boss = self.get_next_boss(member)
+
+        for element in self:
+            if element.name in member.subordinates:
+                element.boss = boss.name
 
 
 class Jail:
