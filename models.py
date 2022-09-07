@@ -8,17 +8,23 @@ class MafiaMember:
     def __str__(self):
         return f'{self.name} tiene nivel {self.seniority} de antigüedad,' \
                f'{" y ".join(self.subordinates) + " son sus subordinados" if self.subordinates else " "}' \
-               f'{"y su jefe actual es " + self.boss if self.boss else " y es el jefe"}'
+               f'{" su jefe es " + self.boss if self.boss else  " y es el jefe"}'
 
     def get_boss(self):
         return self.boss
 
     def add_boss(self, name):
-        self.boss = name
-        return self.boss
+        if name:
+            self.boss = name
+        else:
+            self.boss = None
+            return self.boss
 
     def add_subordinates(self, name):
         self.subordinates.append(name)
+
+    def del_subordinates(self, name):
+        self.subordinates.remove(name)
 
     def get_subordinates(self):
         return self.subordinates
@@ -36,8 +42,6 @@ class MafiaMember:
         if self.boss == member.name:
             return self
 
-        # subordinates.sort(key=lambda x: x.seniority, reverse=True)
-        # return subordinates[0]
 
     def add_new_boss(self, member):
         boss = self.get_equal_member(member)
