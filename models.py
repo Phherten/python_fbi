@@ -6,9 +6,8 @@ class MafiaMember:
         self.boss = boss
 
     def __str__(self):
-        return f'{self.name} tiene nivel {self.seniority} de antigüedad,' \
-               f'{" y ".join(self.subordinates) + " son sus subordinados" if self.subordinates else " "}' \
-               f'{" su jefe es " + self.boss if self.boss else  " y es el jefe"}'
+        return f'{self.name}, {"a su cargo " + " y ".join(self.subordinates)+ ", " if self.subordinates else ""}' \
+               f'{"su jefe es " + self.boss if self.boss else  ", es el Padrino"}'
 
     def get_boss(self):
         return self.boss
@@ -18,7 +17,7 @@ class MafiaMember:
             self.boss = name
         else:
             self.boss = None
-            return self.boss
+        return self.boss
 
     def add_subordinates(self, name):
         self.subordinates.append(name)
@@ -36,7 +35,7 @@ class MafiaMember:
         return None
 
     # Cambiar nombre de metodo
-    def get_next_boss(self, member):
+    def get_senior_subordinate(self, member):
         # 1. Buscar los datos del subordinado
         # 2. Comparar los subordinados
         if self.boss == member.name:
