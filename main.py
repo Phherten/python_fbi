@@ -1,26 +1,23 @@
 import requests
-from models import MafiaMember, Jail
+from models import MafiaMember
 from import_members import import_members
-from functions import print_members_free
 
 
 def main():
     list_of_members = []
     list_of_jailed = []
-    list_of_free_members = []
 
     # Paso 1 Importartodo el grupo de mafiosos e imprimirlos
 
     print('Estos son los miembros de la mafia:')
     list_of_members = import_members('https://run.mocky.io/v3/6d754a01-9529-47fe-a6ee-8037836b8333')
-    list_of_free_members = list_of_members
+
     print("///////////////////////////////////////")
     print("Escribe el nombre del detenido:")
     nombre_detenido = input()
 
     # Paso 2 encarcelar a Un miembro
 
-    jail = Jail()
     equal_seniority = None
     subordinates = []
     subordinate_senior = None
@@ -28,7 +25,7 @@ def main():
 
     for member in list_of_members:
         if member.name == nombre_detenido:
-            list_of_free_members.remove(member)
+            list_of_members.remove(member)
             list_of_jailed.append(member)
             boss = MafiaMember.get_boss(member)
             print(f'Hemos encarcelado a {member.name}')
@@ -47,13 +44,11 @@ def main():
             # print(f'El jefe de {nombre_detenido} es {boss}')
 
     # Comparamos la variable boss que tiene el nombre y traemos el objeto entero.
-
     for member in list_of_members:
         if member.name == boss:
             boss = member
 
     # Paso 4 Reagrupar a los subordinados
-
     for member in list_of_members:
         # Si han detenido a tu jefe
         if member.boss == nombre_detenido:
@@ -86,6 +81,7 @@ def main():
 
     for members in list_of_members:
         subordinates = members.subordinates
+
         for i in subordinates:
 
             if i == nombre_detenido:
@@ -98,12 +94,17 @@ def main():
 
     for member in list_of_jailed:
         if member.name == nombre_detenido:
-            jail.get_out_jail(member)
             list_of_members.append(member)
             list_of_jailed.remove(member)
             print("*******************************************")
             print(f'Hemos soltado a {member.name}')
             print("||||                    |||||")
+
+    subordinates = []
+    for member in list_of_members:
+        if member.name == nombre_detenido:
+            for sub in member.subordinates:
+                subordinates.append(sub)
 
     # Paso 6 Volver al antiguo organigrama
     # Volver a nombrar al antiguo Jefe
@@ -117,13 +118,43 @@ def main():
 
     # Devolver subordinados a sus puestos
 
-    for member in list_of_members:
-        if member.boss == nombre_detenido:
-            print()
-            # MafiaMember.del_subordinates(member,ex_subordinates[0])
+    '''print(equal_seniority)
+    print(subordinate_senior)
+    print(f'Subordinates {subordinates}')'''
+
+    if equal_seniority:
+
+        for member in list_of_members:
+            if member == equal_seniority:
+                MafiaMember.clear_subordinates(member)
+        for member in list_of_members:
+            if member.name == nombre_detenido:
+                for sub in list_of_members:
+                    if sub.name == member.boss:
+                        MafiaMember.add_subordinates(sub,member.name)
+
+
+
+
+
+    else:
+        for member in list_of_members:
+
+            if member.name == subordinate_senior.name:
+                if member.name == subordinates[0]:
+                    MafiaMember.del_subordinates(member, subordinates[1])
+
+                else:
+
+                    MafiaMember.del_subordinates(member, subordinates[0])
 
     for member in list_of_members:
         print(MafiaMember.__str__(member))
+
+    '''print("Desean encarcelar a otro miembro Si o No")
+    respuesta = input()
+    if respuesta == "Si":
+        main()'''
 
 
 if __name__ == '__main__':
