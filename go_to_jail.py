@@ -27,13 +27,14 @@ def go_to_jail(list_of_members, jailed_name, list_of_jailed):
                                 MafiaMember.add_subordinates(jailed.equal_seniority, member.name)
 
                         if jailed_boss:
-                            MafiaMember.add_subordinates(jailed_boss, jailed.name)
+                            MafiaMember.del_subordinates(jailed_boss, jailed.name)
 
                     else:
 
                         senior_subordinate = JailedMember.get_senior_subordinate(jailed)
                         if jailed_boss:
                             MafiaMember.del_subordinates(jailed_boss, jailed.name)
+
                             if senior_subordinate:
                                 MafiaMember.add_subordinates(jailed_boss, senior_subordinate.name)
 
@@ -52,5 +53,5 @@ def go_to_jail(list_of_members, jailed_name, list_of_jailed):
                 for member in list_of_members:
                     print(MafiaMember.__str__(member))
 
-                print("*******************************************************************************")
+                print("*************************************************************************************************")
 

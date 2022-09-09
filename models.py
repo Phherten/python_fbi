@@ -6,8 +6,8 @@ class MafiaMember:
         self.boss = boss
 
     def __str__(self):
-        return f'{self.name}, {"a su cargo " + " y ".join(self.subordinates) + ", " if self.subordinates else ""}' \
-               f'{"su jefe es " + self.boss if self.boss else "es el PADRINO"}'
+        return f'{self.name}: {"A su cargo " + " , ".join(self.subordinates) + ". " if self.subordinates else ""}' \
+               f'{"Su jefe es " + self.boss if self.boss else "Es el PADRINO"}'
 
     def get_name(self):
         return self.name

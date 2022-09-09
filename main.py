@@ -11,7 +11,7 @@ def main():
 
     print('Estos son los miembros de la mafia:')
     list_of_members = import_members('https://run.mocky.io/v3/6d754a01-9529-47fe-a6ee-8037836b8333')
-    print("*************************************************************************************************")
+    print("*************************************************************************************************************")
     print("¿A quien has detenido?:")
     jailed_name = input()
 
