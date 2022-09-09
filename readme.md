@@ -1,9 +1,11 @@
 
 Reorganiza la mafia
 
-Python 3
--pip shell
--pip install requests
+
+pip shell
+pip install requests
+
+Meter los nombres de los detenidos por consola.
 
 
 
