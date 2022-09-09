@@ -2,6 +2,7 @@ from models import MafiaMember, JailedMember
 
 
 def go_to_jail(list_of_members, jailed_name, list_of_jailed):
+
     for jailed_member in list_of_members:
 
         if jailed_member.name == jailed_name:
@@ -14,12 +15,12 @@ def go_to_jail(list_of_members, jailed_name, list_of_jailed):
             print(f'Hemos encarcelado a {jailed_member.name}')
             print("||||||||||||||||||||||||||||||||||||||")
 
-            # Elegimos si el detenido tiene un miembro de igual nivel o hay q nombrar a un subordinado
+            # Elegimos si el detenido tiene un miembro de igual nivel o hay que nombrar a un subordinado
 
             for jailed in list_of_jailed:
-                # Si tiene un miembro del mismo nivel: a sus subordinados le añadimos como jefe el mafioso de mismo nivel
                 jailed_boss = JailedMember.get_boss(jailed)
                 if jailed.name == jailed_name:
+                    # Si hay equal_member: a sus subordinados le añadimos como jefe el mafioso de mismo nivel
                     if jailed.equal_seniority:
                         for member in list_of_members:
                             if member.name in jailed.subordinates:
@@ -30,7 +31,7 @@ def go_to_jail(list_of_members, jailed_name, list_of_jailed):
                             MafiaMember.del_subordinates(jailed_boss, jailed.name)
 
                     else:
-
+                        # Si no hay mafioso del mismo nivel, buscamos entre sus subordinados el de mayor rango
                         senior_subordinate = JailedMember.get_senior_subordinate(jailed)
                         if jailed_boss:
                             MafiaMember.del_subordinates(jailed_boss, jailed.name)
@@ -53,5 +54,5 @@ def go_to_jail(list_of_members, jailed_name, list_of_jailed):
                 for member in list_of_members:
                     print(MafiaMember.__str__(member))
 
-                print("*************************************************************************************************")
-
+                print(
+                    "**********************************************************************************************************")

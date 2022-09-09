@@ -1,5 +1,5 @@
 def print_members_free(member):
-    # esta funcion imprime nombres y descripcion de una lista de mafiosos
+    # esta funcion imprime nombres y descripcion de la lista de mafiosos
     subordinate_list = member["subordinates"]
     print(
         f'{member.get("name")} esta libre y tiene un nivel '

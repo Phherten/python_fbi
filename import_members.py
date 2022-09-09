@@ -4,7 +4,7 @@ from print_member_free import print_members_free
 
 
 def import_members(url):
-    # Busca el JSON con los mafiosos y los convierte en objetos de la clase MafiaMember
+    # Recorre el JSON con los mafiosos y los convierte en objetos de la clase MafiaMember
     response = requests.get(url)
     list_of_members = []
     for member in response.json().get('members', []):
