@@ -1,6 +1,6 @@
 import requests
 from models import MafiaMember
-from simple_functions import print_members_free
+from print_member_free import print_members_free
 
 
 def import_members(url):
