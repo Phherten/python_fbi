@@ -1,24 +1,20 @@
-import requests
-from models import MafiaMember, Jail
+from import_members import import_members
+from go_to_jail import go_to_jail
+from go_out_jail import go_out_jail
 
 
 def main():
     list_of_members = []
+    list_of_jailed = []
 
-    # Paso 1
-    response = requests.get('https://run.mocky.io/v3/6d754a01-9529-47fe-a6ee-8037836b8333')
-    for member in response.json().get('members', []):
-        list_of_members.append(MafiaMember(**member))
+    print('Estos son los miembros de la mafia:')
+    list_of_members = import_members('https://run.mocky.io/v3/6d754a01-9529-47fe-a6ee-8037836b8333')
+    print("******************************************************************************************************")
+    print("¿A quien has detenido?:")
+    jailed_name = input()
 
-    # Paso 2
-    jail = Jail()
-    for member in list_of_members:
-        if member.name == 'Jhon':
-            jail.got_to_jail(member)
-
-    jail.get_out_jail('Jhon')
-
-    print(list_of_members.("name"))
+    go_to_jail(list_of_members, jailed_name, list_of_jailed)
+    go_out_jail(list_of_members, jailed_name, list_of_jailed)
 
 
 if __name__ == '__main__':
